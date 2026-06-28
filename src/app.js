@@ -5,12 +5,11 @@ function init() {
   }
   window.scrollTo(0, 0);
 
+  const presentationMultiplier = 18;
+
   const displayBack = document.getElementById('counter-display-back');
-  const displayFront = document.getElementById('counter-display-front');
   const displayBackDigits = displayBack.querySelector('.digits-span');
   const displayBackSuffix = displayBack.querySelector('.suffix-span');
-  const displayFrontDigits = displayFront.querySelector('.digits-span');
-  const displayFrontSuffix = displayFront.querySelector('.suffix-span');
   const layerBase = document.querySelector('.layer-base');
   
   const layoutContainer = document.querySelector('.main-layout-container');
@@ -36,6 +35,15 @@ function init() {
       primaLineaPath.style.strokeDasharray = primaLineaLength;
       primaLineaPath.style.strokeDashoffset = primaLineaLength;
     }
+  }
+
+  // Brush mask path initialization
+  const maskBrushPath = document.getElementById('mask-brush-path');
+  let brushLength = 0;
+  if (maskBrushPath) {
+    brushLength = maskBrushPath.getTotalLength();
+    maskBrushPath.style.strokeDasharray = brushLength;
+    maskBrushPath.style.strokeDashoffset = brushLength;
   }
   
   // Cache to store the current morph card size and avoid layout thrashing
@@ -120,13 +128,13 @@ function init() {
   const startTrapezoid = {
     color: [220, 62, 204],
     viewBox: [1512, 870],
-    path: parsePath("M14.6316 827.5683C7.4661 848.3484 22.9027 870.0000 44.8836 870.0000L1323.4086 870.0000C1338.8225 870.0000 1352.0462 859.0114 1354.8678 843.8579L1504.9506 37.8579C1508.6155 18.1761 1493.5115 0.0000 1473.4913 0.0000L322.8146 0.0000C309.1621 0.0000 297.0132 8.6616 292.5627 21.5683L14.6316 827.5683Z")
+    path: parsePath("M0 32C0 14.3269 14.3269 0 32 0L1480 0C1497.6731 0 1512 14.3269 1512 32L1512 838C1512 855.6731 1497.6731 870 1480 870L32 870C14.3269 870 0 855.6731 0 838L0 32Z")
   };
 
   const intermediateTrapezoid = {
     color: [220, 62, 204],
     viewBox: [1512, 870],
-    path: parsePath("M157.1322 843.8579C159.9538 859.0114 173.1775 870.0000 188.5914 870.0000L1467.1164 870.0000C1489.0973 870.0000 1504.5339 848.3484 1497.3684 827.5683L1219.4373 21.5683C1214.9868 8.6616 1202.8379 0.0000 1189.1854 0.0000L38.5087 0.0000C18.4885 0.0000 3.3845 18.1761 7.0494 37.8579L157.1322 843.8579Z")
+    path: parsePath("M0 32C0 14.3269 14.3269 0 32 0L1480 0C1497.6731 0 1512 14.3269 1512 32L1512 838C1512 855.6731 1497.6731 870 1480 870L32 870C14.3269 870 0 855.6731 0 838L0 32Z")
   };
 
   const rectCardRounded = {
@@ -157,6 +165,7 @@ function init() {
     let numChars, fontSize, suffixText;
     let activeIndex = 0;
     let finalScreenOpacity = 0;
+    let textY = 0;
 
     // Phase 1: Rolling Counter & Transition to Card 1
     if (progress < totalPhase1Max) {
@@ -170,8 +179,8 @@ function init() {
         color = backgroundCard.color;
         width = backgroundCard.viewBox[0];
         height = backgroundCard.viewBox[1];
-        cardWidth = lerp(startWidth, startWidth * 0.75, t);
-        cardHeight = lerp(startHeight, startHeight * 0.75, t);
+        cardWidth = startWidth * 1.25;
+        cardHeight = startHeight * 1.25;
         
         counterOpacity = 1;
         cardTextOpacity = 0;
@@ -183,27 +192,49 @@ function init() {
         numChars = 14;
         fontSize = 19;
         suffixText = "";
+        textY = startHeight * 0.38;
+      } else if (progress < suspensionEnd1) {
+        // Suspension Phase: Keep card fully brushed, full-size, static 22 MLD count
+        path = startTrapezoid.path;
+        color = backgroundCard.color;
+        width = backgroundCard.viewBox[0];
+        height = backgroundCard.viewBox[1];
+        cardWidth = startWidth * 1.25;
+        cardHeight = startHeight * 1.25;
+        
+        counterOpacity = 1;
+        cardTextOpacity = 0;
+        columnsOpacity = 0;
+        
+        textIndex = 0;
+        textOpacity = 0;
+        textTranslateY = 0;
+        numChars = 14;
+        fontSize = 19;
+        suffixText = "";
+        textY = startHeight * 0.38;
       } else {
         // Transition Card 0 -> Card 1 - Stage 2 morphing
-        const t = (progress - fillStart) / (totalPhase1Max - fillStart);
-        const easedT = bezierEase(t);
+        const t = (progress - suspensionEnd1) / (totalPhase1Max - suspensionEnd1);
+        const easedT = softEase(t);
+        textY = lerp(startHeight * 0.38, 0, easedT);
         
         // Distort background container dynamically through Card 3 and Card 2 geometries
         if (easedT < 0.3333) {
           const t1 = easedT / 0.3333;
           path = lerpArray(intermediateTrapezoid.path, cards[2].path, t1);
-          color = lerpArray(backgroundCard.color, cards[2].color, t1);
+          color = lerpArray(backgroundCard.color, cards[0].color, easedT);
           width = lerp(1512, cards[2].viewBox[0], t1);
           height = lerp(870, cards[2].viewBox[1], t1);
           
           const endW = cards[2].viewBox[0] * scale;
           const endH = cards[2].viewBox[1] * scale;
-          cardWidth = lerp(startWidth * 0.75, endW, t1);
-          cardHeight = lerp(startHeight * 0.75, endH, t1);
+          cardWidth = lerp(startWidth * 1.25, endW, t1);
+          cardHeight = lerp(startHeight * 1.25, endH, t1);
         } else if (easedT < 0.6666) {
           const t2 = (easedT - 0.3333) / 0.3333;
           path = lerpArray(cards[2].path, cards[1].path, t2);
-          color = lerpArray(cards[2].color, cards[1].color, t2);
+          color = lerpArray(backgroundCard.color, cards[0].color, easedT);
           width = lerp(cards[2].viewBox[0], cards[1].viewBox[0], t2);
           height = lerp(cards[2].viewBox[1], cards[1].viewBox[1], t2);
           
@@ -216,7 +247,7 @@ function init() {
         } else {
           const t3 = (easedT - 0.6666) / 0.3334;
           path = lerpArray(cards[1].path, cards[0].path, t3);
-          color = lerpArray(cards[1].color, cards[0].color, t3);
+          color = lerpArray(backgroundCard.color, cards[0].color, easedT);
           width = lerp(cards[1].viewBox[0], cards[0].viewBox[0], t3);
           height = lerp(cards[1].viewBox[1], cards[0].viewBox[1], t3);
           
@@ -410,7 +441,8 @@ function init() {
       textIndex, textOpacity, textTranslateY,
       counterOpacity, cardTextOpacity, columnsOpacity, finalScreenOpacity,
       numChars, fontSize, suffixText, activeIndex,
-      autoScrollTime // Pass the current autoScrollTime to DOM updates
+      autoScrollTime, // Pass the current autoScrollTime to DOM updates
+      textY
     };
   }
 
@@ -424,6 +456,31 @@ function init() {
     morphPath.setAttribute('fill', fillRGB);
     
     morphSvg.setAttribute('viewBox', `0 0 ${state.width} ${state.height}`);
+
+    // Brush mask animation & toggling
+    const morphCardClip = document.querySelector('.morph-card-clip');
+    if (state.progress < suspensionEnd1) {
+      morphPath.setAttribute('mask', 'url(#brush-mask)');
+      if (morphCardClip) {
+        morphCardClip.style.mask = 'url(#brush-mask)';
+        morphCardClip.style.webkitMask = 'url(#brush-mask)';
+      }
+      
+      if (maskBrushPath && brushLength > 0) {
+        const brushProgress = Math.min(Math.max(state.progress / fillPhaseStart1, 0), 1);
+        maskBrushPath.style.strokeDashoffset = brushLength * (1 - brushProgress);
+        
+        // Animate stroke width from thin (2px) to thick (400px) based on scroll progress
+        const currentStrokeWidth = lerp(2, 400, brushProgress);
+        maskBrushPath.setAttribute('stroke-width', currentStrokeWidth);
+      }
+    } else {
+      morphPath.removeAttribute('mask');
+      if (morphCardClip) {
+        morphCardClip.style.mask = 'none';
+        morphCardClip.style.webkitMask = 'none';
+      }
+    }
     
     // Fade out drop-shadow filter during Step 4 transition to resolve lag and flicker
     if (state.progress !== undefined) {
@@ -527,34 +584,42 @@ function init() {
     if (state.counterOpacity > 0) {
       displayBack.style.display = 'block';
       displayBack.style.opacity = state.counterOpacity;
-      displayFront.style.display = 'block';
-      displayFront.style.opacity = state.counterOpacity;
       
       const currentText = displayBackDigits.textContent;
       let truncated = currentText;
-      // Truncate based on numChars
       if (currentText.length > state.numChars) {
         truncated = currentText.substring(0, state.numChars);
       }
       displayBackDigits.textContent = truncated;
-      displayFrontDigits.textContent = truncated;
-      
       displayBackSuffix.textContent = state.suffixText;
-      displayFrontSuffix.textContent = state.suffixText;
       
       displayBack.style.fontSize = `${state.fontSize}vw`;
-      displayFront.style.fontSize = `${state.fontSize}vw`;
       
-      // Animate slide-up of the counter text
+      if (state.progress < fillPhaseStart1) {
+        displayBack.style.color = '#F5B2EF';
+      } else if (state.progress < suspensionEnd1) {
+        const suspensionProgress = Math.min(Math.max((state.progress - fillPhaseStart1) / (suspensionEnd1 - fillPhaseStart1), 0), 1);
+        const textR = lerp(245, 255, suspensionProgress);
+        const textG = lerp(178, 255, suspensionProgress);
+        const textB = lerp(239, 255, suspensionProgress);
+        displayBack.style.color = `rgb(${Math.round(textR)}, ${Math.round(textG)}, ${Math.round(textB)})`;
+      } else {
+        displayBack.style.color = '#ffffff';
+      }
+      
+      // Animate slide-up of the counter text (positioned relative to center with textY)
       const slideY = (1 - state.counterOpacity) * 50;
-      const transformStyle = `translate3d(-50%, calc(-50% - ${slideY}px), 0)`;
-      displayBack.style.transform = transformStyle;
-      displayFront.style.transform = transformStyle;
+      const finalY = state.textY - slideY;
+      displayBack.style.transform = `translate3d(-50%, calc(-50% + ${finalY}px), 0)`;
+      
+      // Also update the position of the reel container
+      const cardTextMask = document.querySelector('.card-text-mask');
+      if (cardTextMask) {
+        cardTextMask.style.transform = `translate3d(-50%, calc(-50% + ${state.textY}px), 30px)`;
+      }
     } else {
       displayBack.style.display = 'none';
       displayBack.style.opacity = 0;
-      displayFront.style.display = 'none';
-      displayFront.style.opacity = 0;
     }
 
     // Manage left/right columns opacity
@@ -623,7 +688,7 @@ function init() {
         // Calculate horizontal translation directly from vertical scroll progression
         const track = finalScreen.querySelector('.final-cards-track');
         if (track) {
-          const presentationScrollHeight = 13 * window.innerHeight;
+          const presentationScrollHeight = presentationMultiplier * window.innerHeight;
           const scrollPosition = window.scrollY;
           const carouselStart = 0.91 * presentationScrollHeight;
           const carouselSpan = 4.0 * window.innerHeight;
@@ -670,8 +735,10 @@ function init() {
 
   const targetValue = 22000000000; // 22 Billion
   const totalPhase1Max = 0.5; // End of Macro Phase 1 scroll progress (0.0 to 0.5)
-  const fillPhaseStart = 0.74; // Relative fill start (74% of Phase 1)
-  const fillPhaseStart1 = fillPhaseStart * totalPhase1Max; // = 0.37
+  const fillPhaseStart = 0.65; // Relative fill start (65% of Phase 1)
+  const fillPhaseStart1 = fillPhaseStart * totalPhase1Max; // = 0.325
+  const suspensionEnd = 0.82; // Suspension phase ends (82% of Phase 1)
+  const suspensionEnd1 = suspensionEnd * totalPhase1Max; // = 0.41
   
   const formatNumber = (num) => {
     return new Intl.NumberFormat('it-IT').format(num);
@@ -708,6 +775,7 @@ function init() {
   // Eased progress mapping. Standard Ease-In-Out (starts slowly, speeds up in the middle, and settles gently at the target).
   const bezierEase = createCubicBezierSolver(0.42, 0, 0.58, 1);
   const bezierEaseOut = createCubicBezierSolver(0, 0, 0.2, 1);
+  const softEase = createCubicBezierSolver(0.76, 0, 0.24, 1);
 
   let ticking = false;
   let lastScrollY = window.scrollY;
@@ -883,7 +951,7 @@ function init() {
     // Quartic ease-in-out curve for balanced, smooth deceleration (Idea C)
     const easeT = t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
     
-    const presentationScrollHeight = 13 * window.innerHeight;
+    const presentationScrollHeight = presentationMultiplier * window.innerHeight;
     const scrollEnd = presentationScrollHeight * autoscrollTargetProgress;
     
     const currentScrollY = lerp(autoscrollStartScrollY, scrollEnd, easeT);
@@ -906,7 +974,7 @@ function init() {
 
   function drawFrame() {
     const frameStart = performance.now();
-    const presentationScrollHeight = 13 * window.innerHeight;
+    const presentationScrollHeight = presentationMultiplier * window.innerHeight;
     const scrollPosition = window.scrollY;
     
     // Slide up all fixed viewport elements if scrolling down to the white text section
@@ -997,9 +1065,7 @@ function init() {
     
     const formattedValue = formatNumber(currentValue);
     displayBackDigits.textContent = formattedValue;
-    displayFrontDigits.textContent = formattedValue;
     displayBackSuffix.textContent = "";
-    displayFrontSuffix.textContent = "";
 
     // Morphing Card and DOM transitions
     const cardState = getCardState(progress);
@@ -1079,7 +1145,7 @@ function init() {
   }
 
   function updateTargetProgress() {
-    const presentationScrollHeight = 13 * window.innerHeight;
+    const presentationScrollHeight = presentationMultiplier * window.innerHeight;
     const scrollPosition = window.scrollY;
     const tempTargetProgress = presentationScrollHeight > 0 ? Math.min(Math.max(scrollPosition / presentationScrollHeight, 0), 1) : 0;
     
@@ -1117,7 +1183,7 @@ function init() {
 
     // Step snapping logic (Card 1 <-> Card 2 <-> Card 3)
     if (!isAutoscrolling && !cooldownActive) {
-      const presentationScrollHeight = 13 * window.innerHeight;
+      const presentationScrollHeight = presentationMultiplier * window.innerHeight;
       if (presentationScrollHeight > 0) {
         const threshold = 25; // Intentional 25px trigger threshold to avoid accidental activations
         const y0 = fillPhaseStart1 * presentationScrollHeight; // threshold to trigger Step 1 from Step 0
@@ -1171,7 +1237,7 @@ function init() {
 
   // Handle window resizing (e.g. rotating device)
   window.addEventListener('resize', () => {
-    const presentationScrollHeight = 13 * window.innerHeight;
+    const presentationScrollHeight = presentationMultiplier * window.innerHeight;
     if (presentationScrollHeight > 0) {
       let targetP = 0;
       if (activeStep === 1) targetP = 0.50;
