@@ -1,0 +1,1129 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Big+Shoulders+Display:wght@900&family=Outfit:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap');
+
+/* 
+  If you have the official Dharma Gothic font files, you can place them in a folder 
+  and uncomment this @font-face block to load it directly:
+  
+  @font-face {
+    font-family: 'Dharma Gothic';
+    src: url('DharmaGothic-Heavy.woff2') format('woff2'),
+         url('DharmaGothic-Heavy.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+  }
+*/
+
+@font-face {
+  font-family: 'Dharma Gothic E ExBold';
+  src: local('Dharma Gothic C ExBold'),
+       local('Dharma Gothic C ExtraBold'),
+       local('DharmaGothicC-ExBold'),
+       local('DharmaGothicC-ExtraBold'),
+       local('Dharma Gothic C Heavy'),
+       local('Dharma Gothic E ExBold'), 
+       local('Dharma Gothic E ExtraBold'), 
+       local('DharmaGothicE-ExBold'), 
+       local('DharmaGothicE-ExtraBold'), 
+       local('Dharma Gothic E Heavy'),
+       local('Dharma Gothic Heavy');
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background-color: #ffffff;
+  scroll-behavior: auto;
+  overscroll-behavior: none; /* Disable browser elastic scroll bounce */
+  -ms-overflow-style: none;  /* Hide scrollbar for IE and Edge */
+  scrollbar-width: none;     /* Hide scrollbar for Firefox */
+}
+
+/* Scroll height to link the counter value directly to scroll */
+body {
+  min-height: 1850vh;
+  position: relative;
+  font-family: 'Outfit', sans-serif;
+  overflow-x: hidden;
+  overscroll-behavior: none; /* Disable elastic scroll bounce on body */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+  display: none;
+}
+
+
+
+/* Dual Layer Centered Text System */
+.viewport-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh; /* Prevents mobile browser UI jumps when address bar retracts */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  opacity: 0; /* Hidden initially to prevent FOUT */
+  transition: opacity 0.5s ease-in;
+}
+
+.viewport-layer.fonts-loaded {
+  opacity: 1; /* Fade in once fonts are ready */
+}
+
+/* Base layer: holds the counter text over the background SVG */
+.layer-base {
+  background-color: transparent;
+  color: #ffffff;
+  z-index: 90; /* Underneath the morphing card so card covers the back text */
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* Clipped wrapper for the front counter text */
+.morph-card-clip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  transform-style: preserve-3d;
+  transform: translate3d(0, 0, 15px);
+}
+
+#counter-display-back {
+  color: #dc3ecc; /* Fucsia brand color matching sfondo.svg for parts outside the card */
+}
+
+#counter-display-front {
+  color: #ffffff; /* White text for parts inside the card */
+}
+
+
+
+
+
+
+/* The original big rolling counter elements inside the layers */
+.counter-display {
+  font-family: 'Dharma Gothic C ExBold', 'Dharma Gothic C', 'Dharma Gothic E ExBold', 'Dharma Gothic E', 'Dharma Gothic', 'Bebas Neue', 'Big Shoulders Display', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 19vw; 
+  white-space: nowrap;
+  letter-spacing: -0.15vw; 
+  line-height: 0.8;
+  user-select: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  transform-origin: center center;
+  transition: opacity 0.6s ease-in-out;
+  display: inline-flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.counter-display .suffix-span {
+  font-size: 0.224em; /* Scales proportionally with parent font-size */
+  margin-left: 0.02em;
+  margin-top: 0.064em; /* Align to the top cap height */
+  text-transform: uppercase;
+}
+
+.counter-display.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.main-layout-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  align-items: center;
+  padding: 0 4vw;
+  z-index: 100;
+  pointer-events: none; /* Make container click-through to allow background reactions */
+  will-change: transform, opacity;
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease;
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+}
+
+
+
+/* Enable pointer events for active components so they can be clicked if needed */
+.column-left, .column-center, .column-right {
+  pointer-events: auto;
+}
+
+/* 12-column Grid Placement */
+.column-left {
+  grid-column: 2 / 4;
+  text-align: left;
+  max-width: 320px;
+  justify-self: start;
+}
+
+.column-center {
+  grid-column: 4 / 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.column-right {
+  grid-column: 10 / 12;
+  text-align: left;
+  max-width: 320px;
+  justify-self: end;
+}
+
+.section-title {
+  font-family: 'Dharma Gothic C ExBold', 'Dharma Gothic C', 'Dharma Gothic E ExBold', 'Dharma Gothic E', 'Dharma Gothic', 'Bebas Neue', 'Big Shoulders Display', sans-serif;
+  font-weight: 900;
+  font-size: 4.8vw;
+  letter-spacing: 0.02em;
+  line-height: 0.85;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  text-align: left;
+  margin: 0;
+  /* Transition handled frame-by-frame by JS LERP for maximum smoothness */
+  will-change: opacity, transform;
+  white-space: pre-wrap;
+}
+
+.description-text {
+  font-family: 'Rockwell', 'Rockwell Nova', 'Courier New', serif;
+  font-weight: 400;
+  font-size: 1.1vw;
+  line-height: 1.5;
+  color: #2b2b2b;
+  margin: 0;
+  /* Transition handled frame-by-frame by JS LERP for maximum smoothness */
+  will-change: opacity, transform;
+}
+
+/* Morphing Card Styles */
+.morph-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  will-change: width, height, transform;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+#morph-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.15));
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+:root {
+  --reel-item-height: 12vw;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --reel-item-height: 21.2vw;
+  }
+}
+
+.card-text-mask {
+  position: relative;
+  z-index: 10;
+  user-select: none;
+  transform-style: preserve-3d;
+  transform: translate3d(0, 0, 30px);
+  overflow: visible;
+  height: var(--reel-item-height);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.numbers-reel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+
+.reel-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--reel-item-height);
+  width: 100%;
+  will-change: opacity, transform, color;
+}
+
+.card-glare {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 65%);
+  pointer-events: none;
+  z-index: 20;
+  mix-blend-mode: overlay;
+  opacity: 0;
+  transform: translate3d(0, 0, 20px); /* Positioned between card base and floating text */
+  transition: opacity 0.15s ease-out;
+  pointer-events: none;
+}
+
+.number-wrapper {
+  display: flex;
+  align-items: flex-start; /* Align suffix to top of the digits */
+  justify-content: center;
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+
+.number-digits {
+  font-family: 'Dharma Gothic C ExBold', 'Dharma Gothic C', 'Dharma Gothic E ExBold', 'Dharma Gothic E', 'Dharma Gothic', 'Bebas Neue', sans-serif;
+  font-weight: 900;
+  font-size: 12.5vw; /* Extremely large and impactive */
+  line-height: 0.8;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: -0.15vw;
+  will-change: opacity, transform;
+}
+
+.number-suffix {
+  font-family: 'Dharma Gothic C ExBold', 'Dharma Gothic C', 'Dharma Gothic E ExBold', 'Dharma Gothic E', 'Dharma Gothic', 'Bebas Neue', sans-serif;
+  font-weight: 900;
+  font-size: 2.8vw; /* Proportional to digits */
+  line-height: 0.8;
+  color: #ffffff;
+  text-transform: uppercase;
+  margin-left: 0.2vw;
+  margin-top: 0.8vw; /* Push down slightly to align with the cap height of digits */
+  will-change: opacity, transform;
+}
+
+/* Transition states for content elements when shifting */
+.fade-out-up {
+  opacity: 0 !important;
+  transform: translateY(-20px) !important;
+}
+
+.fade-in-up {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.fade-out-down {
+  opacity: 0 !important;
+  transform: translateY(20px) !important;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 900px) {
+  .main-layout-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 3vh;
+    padding: 4vh 6vw;
+    align-content: center;
+  }
+  
+  .column-left, .column-center, .column-right {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+  
+  .section-title {
+    font-size: 13vw;
+    line-height: 0.85;
+  }
+  
+  .description-text {
+    font-size: 4vw;
+  }
+  
+  .number-digits {
+    font-size: 22vw;
+  }
+  
+  .number-suffix {
+    font-size: 6vw;
+    margin-top: 1.5vw;
+  }
+}
+
+/* Instagram & FB Style Floating Reactions (Hearts & Likes) */
+#reactions-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1000;
+  contain: strict; /* Insulates reaction spawns from layout thrashing */
+}
+
+.reaction-container {
+  position: fixed;
+  width: 80px;
+  height: 80px;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  animation: floatUp 1.6s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.reaction-sway {
+  width: 100%;
+  height: 100%;
+  animation: sway 1s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes floatUp {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(0.4) rotate(var(--rotation));
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--drift)), -65vh) scale(calc(var(--scale) * 0.75)) rotate(calc(var(--rotation) * 1.25));
+  }
+}
+
+@keyframes sway {
+  0% {
+    transform: translateX(calc(-1 * var(--sway-width))) rotate(-6deg);
+  }
+  100% {
+    transform: translateX(var(--sway-width)) rotate(6deg);
+  }
+}
+
+/* Hide default cursor on desktop/mouse pointers and display custom cursor */
+@media (pointer: fine) {
+  html, body, a, button, .counter-display, .final-message, .reaction-container {
+    cursor: none !important;
+  }
+  
+  #custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1.2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate3d(-100px, -100px, 0);
+    will-change: transform;
+    opacity: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05), inset 0 0 4px rgba(255, 255, 255, 0.25);
+    transition: width 0.15s ease-out, height 0.15s ease-out, opacity 0.15s ease-out;
+  }
+  
+  #custom-cursor.visible {
+    opacity: 1;
+  }
+}
+
+/* Hide custom cursor on mobile touch devices */
+@media (pointer: coarse) {
+  #custom-cursor {
+    display: none;
+  }
+}
+
+/* Scroll indicator (non-clickable down arrow + scroll text) */
+.scroll-indicator {
+  position: fixed;
+  bottom: 4vh;
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
+  z-index: 150;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #1a1a1a;
+  will-change: opacity, transform;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.scroll-text {
+  font-family: 'Rockwell', 'Rockwell Nova', 'Courier New', serif;
+  font-weight: bold;
+  font-variant: small-caps;
+  font-size: 14px;
+  letter-spacing: 0.25em;
+  opacity: 0.8;
+}
+
+.scroll-arrow {
+  width: 20px;
+  height: 20px;
+  opacity: 0.7;
+  animation: bounceArrow 2s infinite;
+}
+
+@keyframes bounceArrow {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  40% {
+    transform: translate3d(0, 8px, 0);
+  }
+  60% {
+    transform: translate3d(0, 4px, 0);
+  }
+}
+
+/* Final Screen Styles */
+.final-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 15;
+  transform-style: preserve-3d;
+  transform: translate3d(0, 0, 40px);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  touch-action: pan-y; /* Allow vertical scroll for exit, lock horizontal */
+  cursor: grab;
+}
+
+.final-screen.grabbing {
+  cursor: grabbing !important;
+}
+
+.final-title {
+  font-family: 'Dharma Gothic C ExBold', 'Dharma Gothic C', 'Dharma Gothic E ExBold', 'Dharma Gothic E', 'Dharma Gothic', 'Bebas Neue', 'Big Shoulders Display', sans-serif;
+  font-weight: 900;
+  font-size: 12vw;
+  line-height: 0.85;
+  color: #ffffff;
+  text-align: center;
+  text-transform: uppercase;
+  margin: 0;
+  letter-spacing: -0.05vw;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  
+  /* Absolute layering behind the cards */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -55%, 0);
+  z-index: 10;
+  width: 100%;
+}
+
+/* Line Reveal Masking */
+.line-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+
+.line-content {
+  display: block;
+  transform: translate3d(0, 125%, 0); /* Shift down further to hide high letter glyph tops */
+  opacity: 0; /* Dual fade-in for total invisibility at start */
+  transition: transform 0s, opacity 0s; /* Resets instantly when active class is removed */
+  will-change: transform, opacity;
+}
+
+/* Slide up animation on active state */
+.final-screen.active .line-content {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease-out;
+  transition-delay: 0.35s; /* Delay after screen expansion finishes */
+}
+
+/* Stagger delay for the second line of text */
+.final-screen.active .line-mask:nth-child(2) .line-content {
+  transition-delay: 0.5s; /* 0.35s base delay + 0.15s stagger */
+}
+
+/* Final Cards Carousel Container */
+.final-cards-container {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate3d(-50%, -30%, 40px); /* Starts lower */
+  opacity: 0;
+  z-index: 20;
+  width: 100vw;
+  padding: 80px 0; /* Padding for zoom hovers */
+  box-sizing: border-box;
+  overflow: hidden; /* Mask out overflow scroll bounds */
+  pointer-events: none;
+  transition: transform 0s, opacity 0s; /* Resets instantly */
+  touch-action: pan-y; /* Allow vertical scroll for exit, lock horizontal */
+  cursor: grab;
+}
+
+.final-cards-container.grabbing {
+  cursor: grabbing !important;
+}
+
+/* Animate card container upward on active final state */
+.final-screen.active .final-cards-container {
+  opacity: 1;
+  transform: translate3d(-50%, -46%, 40px); /* Centered and overlapping bottom of title */
+  pointer-events: auto;
+  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 1s ease-out;
+  transition-delay: 1.30s; /* Start precisely after title is complete! */
+}
+
+/* Infinite Scroll Track */
+.final-cards-track {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5vw; /* Spacing between cards */
+  width: auto;
+  will-change: transform;
+}
+
+.carousel-card-item {
+  position: relative;
+  flex: 0 0 auto;
+  width: 16vw;
+  max-width: 250px;
+  min-width: 140px;
+  margin: 0; /* Spaced via gap instead of overlapping negative margins */
+  will-change: transform, opacity;
+  z-index: 21;
+  
+  /* Initial hidden state for staggered entrance */
+  opacity: 0;
+  transform: rotate(var(--initial-rotation, 0deg)) translate3d(0, 0, 0) scale(0.75);
+  
+  /* Smooth transitions */
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.8s ease-out,
+              filter 0.5s ease;
+}
+
+.carousel-card-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 14px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Generalized staggered organic tilts & vertical offsets (cycling every 4 items) */
+.carousel-card-item:nth-child(4n+1) {
+  --organic-rotation: -4deg;
+  --organic-translate-y: 15px;
+  --initial-rotation: -10deg;
+}
+.carousel-card-item:nth-child(4n+2) {
+  --organic-rotation: 2deg;
+  --organic-translate-y: -10px;
+  --initial-rotation: 8deg;
+}
+.carousel-card-item:nth-child(4n+3) {
+  --organic-rotation: -3deg;
+  --organic-translate-y: 12px;
+  --initial-rotation: -8deg;
+}
+.carousel-card-item:nth-child(4n) {
+  --organic-rotation: 4deg;
+  --organic-translate-y: -5px;
+  --initial-rotation: 6deg;
+}
+
+/* When active, transition to organic layout */
+.final-screen.active .carousel-card-item {
+  opacity: 1;
+  transform: rotate(var(--organic-rotation, 0deg)) translate3d(0, var(--organic-translate-y, 0px), 0) scale(1);
+}
+
+
+
+/* Premium Card Hover Effect - pulls hovered card forward and dims/scales the rest */
+.carousel-card-item:hover {
+  transform: rotate(0deg) translate3d(0, -25px, 30px) scale(1.08) !important;
+  z-index: 99;
+  filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.5)) brightness(1) !important;
+  opacity: 1 !important;
+  /* Reset delay on hover for instant responsiveness */
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.2, 1),
+              opacity 0.4s ease,
+              filter 0.4s ease !important;
+}
+
+.final-cards-container:hover .carousel-card-item:not(:hover) {
+  filter: brightness(0.6) contrast(0.9) blur(1px);
+  opacity: 0.75;
+}
+
+.final-cards-container:hover .carousel-card-item:not(:hover):nth-child(4n+1) {
+  transform: rotate(-4deg) translate3d(0, 20px, -15px) scale(0.95);
+}
+.final-cards-container:hover .carousel-card-item:not(:hover):nth-child(4n+2) {
+  transform: rotate(2deg) translate3d(0, -5px, -15px) scale(0.95);
+}
+.final-cards-container:hover .carousel-card-item:not(:hover):nth-child(4n+3) {
+  transform: rotate(-3deg) translate3d(0, 17px, -15px) scale(0.95);
+}
+.final-cards-container:hover .carousel-card-item:not(:hover):nth-child(4n) {
+  transform: rotate(4deg) translate3d(0, 0, -15px) scale(0.95);
+}
+
+/* Card number badge styling */
+.card-number {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: rgba(83, 62, 220, 0.9); /* Brand violet with opacity */
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  color: #ffffff;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 900;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  pointer-events: none; /* Click-through */
+  z-index: 25;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover style for badge */
+.carousel-card-item:hover .card-number {
+  background: rgba(83, 62, 220, 1);
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 900px) {
+  .final-title {
+    font-size: 20vw;
+    line-height: 0.85;
+    top: 38%;
+    transform: translate3d(-50%, -50%, 0);
+  }
+  
+  .final-cards-container {
+    top: 68%;
+    transform: translate3d(-50%, -30%, 40px);
+    padding: 40px 0;
+  }
+  
+  .final-cards-track {
+    gap: 0.4vw; /* Mobile card gap */
+  }
+  
+  .final-screen.active .final-cards-container {
+    transform: translate3d(-50%, -50%, 40px);
+  }
+  
+  .carousel-card-item {
+    width: 22vw;
+    min-width: 80px;
+    margin: 0;
+  }
+  
+  .card-number {
+    top: 8px;
+    left: 8px;
+    width: 26px;
+    height: 26px;
+    font-size: 0.75rem;
+    border-width: 1px;
+  }
+}
+
+/* Decorative SVGs (e.g. prima_linea.svg) */
+.decor-line {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 25vw;
+  max-width: 480px;
+  min-width: 250px;
+  height: auto;
+  pointer-events: none;
+  z-index: 80; /* Posizionato sotto il testo principale ma sopra lo sfondo */
+  overflow: visible;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  will-change: opacity;
+}
+
+.decor-line.active {
+  opacity: 1;
+}
+
+#prima-linea {
+  left: -23px;
+  bottom: -41px;
+  width: 509px;
+  max-width: none;
+  min-width: none;
+}
+
+.decor-line path {
+  /* stroke-dasharray e stroke-dashoffset di fallback prima che JS calcoli la lunghezza esatta */
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  will-change: stroke-dashoffset;
+}
+
+/* Regolazioni di dimensione su dispositivi mobile */
+@media (max-width: 900px) {
+  .decor-line {
+    width: 45vw;
+    min-width: 180px;
+  }
+}
+
+/* Layout Inspector Panel (Dev Helper Tool) */
+.layout-inspector {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 320px;
+  max-height: 90vh;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #1a1a1a;
+  overflow: hidden;
+  transition: max-height 0.3s ease, width 0.3s ease, background 0.3s ease;
+}
+
+.layout-inspector.minimized {
+  width: 200px;
+  max-height: 48px;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.inspector-header {
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(83, 62, 220, 0.08);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  user-select: none;
+}
+
+.inspector-header h4 {
+  font-size: 14px;
+  margin: 0;
+  font-weight: 700;
+  color: #533edc;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  color: #533edc;
+  font-size: 16px;
+  font-weight: 900;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.btn-icon:hover {
+  background: rgba(83, 62, 220, 0.1);
+}
+
+.inspector-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  max-height: calc(90vh - 48px);
+}
+
+.layout-inspector.minimized .inspector-body {
+  display: none;
+}
+
+.inspector-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.inspector-field label {
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #555;
+  text-align: left;
+}
+
+.inspector-field select,
+.inspector-field input[type="text"] {
+  width: 100%;
+  padding: 6px 10px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+  background: #fff;
+  font-size: 13px;
+  color: #333;
+}
+
+.checkbox-field {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.checkbox-field label {
+  cursor: pointer;
+  text-transform: none;
+  font-weight: normal;
+  letter-spacing: normal;
+  font-size: 12px;
+  margin: 0;
+}
+
+.checkbox-field input {
+  cursor: pointer;
+}
+
+.inspector-divider {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #888;
+  letter-spacing: 0.1em;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding-bottom: 4px;
+  margin-top: 8px;
+  text-align: left;
+}
+
+.field-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.field-header span {
+  font-size: 12px;
+  font-family: monospace;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #333;
+}
+
+.inspector-field input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.1);
+  outline: none;
+  margin: 6px 0;
+}
+
+.inspector-field input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #533edc;
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+#inspector-css-output {
+  width: 100%;
+  height: 90px;
+  font-family: monospace;
+  font-size: 11px;
+  padding: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.03);
+  color: #333;
+  resize: none;
+}
+
+.btn-copy {
+  background: #533edc;
+  color: #fff;
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.btn-copy:hover {
+  background: #412cb7;
+}
+
+.copy-status {
+  margin: 0;
+  font-size: 11px;
+  text-align: center;
+  color: #2e7d32;
+  font-weight: bold;
+  min-height: 14px;
+}
+
+.drag-hint {
+  margin: 0;
+  font-size: 10px;
+  color: #666;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Cursore durante il trascinamento */
+[data-inspector-target] {
+  cursor: move !important;
+  pointer-events: auto !important;
+}
+
+/* Sezione Testuale Bianca Sottostante (Step 5) */
+.scrollable-content-section {
+  position: absolute;
+  top: 1683vh; /* Inizia esattamente al termine della presentazione fissa */
+  width: 100vw;
+  min-height: 150vh;
+  background-color: #ffffff;
+  color: #1a1a1a;
+  padding: 15vh 10vw;
+  box-sizing: border-box;
+  z-index: 2000; /* Sopra tutti i layer fissi */
+}
+
+.scrollable-content-section .content-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: 'Outfit', sans-serif;
+}
+
+.scrollable-content-section h2 {
+  font-size: 3.5vw;
+  font-weight: 900;
+  margin-bottom: 2rem;
+  color: #533edc; /* Colore brand violet */
+  text-transform: uppercase;
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: -0.05vw;
+  line-height: 1.1;
+}
+
+.scrollable-content-section p {
+  font-size: 1.35rem;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+  color: #2b2b2b;
+  font-family: 'Outfit', sans-serif;
+}
+
+@media (max-width: 900px) {
+  .scrollable-content-section {
+    padding: 10vh 8vw;
+  }
+  .scrollable-content-section h2 {
+    font-size: 8vw;
+  }
+  .scrollable-content-section p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+}
+
+
+
+
