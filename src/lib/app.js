@@ -1,4 +1,4 @@
-function init() {
+export function init() {
   // Force scroll restoration to manual and scroll to top on load
   if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual';
@@ -1710,10 +1710,4 @@ function init() {
     // Seleziona il primo target di default
     changeTarget('#prima-linea');
   }
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', init);
-} else {
-  init();
 }

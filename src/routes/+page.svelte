@@ -1,0 +1,277 @@
+<script>
+	import { onMount } from 'svelte';
+	import { init } from '$lib/app.js';
+
+	onMount(() => {
+		init();
+	});
+</script>
+
+<svelte:head>
+	<title>Scroll Counter | 22MLD</title>
+	<meta name="description" content="Contatore interattivo legato direttamente allo scroll, con design grafico split-color da 0 a 22 miliardi." />
+</svelte:head>
+
+<!-- Mask Defs for Brush effect -->
+<svg width="0" height="0" style="position: absolute; pointer-events: none;">
+	<defs>
+		<clipPath id="sfondo-clip">
+			<path d="M0 32C0 14.3269 14.3269 0 32 0L1480 0C1497.6731 0 1512 14.3269 1512 32L1512 838C1512 855.6731 1497.6731 870 1480 870L32 870C14.3269 870 0 855.6731 0 838L0 32Z" />
+		</clipPath>
+		<mask id="brush-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="1512" height="870">
+			<rect width="1512" height="870" fill="black" />
+			<g clip-path="url(#sfondo-clip)">
+				<path id="mask-brush-path" d="M13.4746 291.27C13.4746 291.27 100.646 -18.6724 255.617 16.8418C410.588 52.356 61.0296 431.197 233.017 546.326C431.659 679.299 444.494 21.0125 652.73 100.784C860.967 180.556 468.663 430.709 617.216 546.326C765.769 661.944 819.097 48.2722 988.501 120.156C1174.21 198.957 809.424 543.841 988.501 636.726C1189.37 740.915 1301.67 149.213 1301.67 149.213" transform="scale(1.15, 1.31)" stroke="white" stroke-width="400" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+			</g>
+		</mask>
+	</defs>
+</svg>
+
+<!-- Base Layer (Magenta Background) -->
+<div class="viewport-layer layer-base">
+</div>
+
+<!-- Main Overlay Layout (Solid layer on top of background) -->
+<div class="main-layout-container">
+	<div class="column-left">
+		<h2 class="section-title" id="card-title">VISUALIZZAZIONI</h2>
+	</div>
+
+	<div class="column-center">
+		<div class="morph-card">
+			<!-- SVG container for the morphing path -->
+			<svg id="morph-svg" viewBox="0 0 609 378" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+				<path id="morph-path" d="M83.4264 31.2829C87.2475 17.6812 99.5363 8.19496 113.662 7.94264L558.038 0.00519967C575.234 -0.301956 589.597 13.0383 590.559 30.2101L608.13 343.844C609.175 362.495 594.089 378.072 575.414 377.625L31.2516 364.587C10.3741 364.087 -4.43754 344.047 1.21056 323.942L83.4264 31.2829Z" fill="#533EDC"/>
+			</svg>
+
+			<!-- Back text (placed after SVG to stack naturally on top of it) -->
+			<div id="counter-display-back" class="counter-display">
+				<span class="digits-span">0</span><span class="suffix-span"></span>
+			</div>
+
+			<!-- Dynamic text centered inside the morphing card (Slot Machine Reel) -->
+			<div class="card-text-mask">
+				<div class="numbers-reel" id="numbers-reel">
+					<!-- Item 0 (Card 1) -->
+					<div class="reel-item" data-index="0">
+						<div class="number-wrapper">
+							<span class="number-digits">22</span>
+							<span class="number-suffix">MLD</span>
+						</div>
+					</div>
+					<!-- Item 1 (Card 2) -->
+					<div class="reel-item" data-index="1">
+						<div class="number-wrapper">
+							<span class="number-digits">1.0</span>
+							<span class="number-suffix">MLD</span>
+						</div>
+					</div>
+					<!-- Item 2 (Card 3) -->
+					<div class="reel-item" data-index="2">
+						<div class="number-wrapper">
+							<span class="number-digits">27</span>
+							<span class="number-suffix">MLN</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Final Screen Overlay (TU HAI VISTO QUESTI VIDEO?) -->
+			<div class="final-screen" id="final-screen">
+				<h1 class="final-title">
+					<span class="line-mask"><span class="line-content">TU HAI VISTO</span></span>
+					<span class="line-mask"><span class="line-content">QUESTI VIDEO?</span></span>
+				</h1>
+				
+				<div class="final-cards-container">
+					<div class="final-cards-track">
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 1"><span class="card-number">1</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 2"><span class="card-number">2</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 3"><span class="card-number">3</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 4"><span class="card-number">4</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 5"><span class="card-number">5</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 6"><span class="card-number">6</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 7"><span class="card-number">7</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 8"><span class="card-number">8</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 9"><span class="card-number">9</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 10"><span class="card-number">10</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 11"><span class="card-number">11</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 12"><span class="card-number">12</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 13"><span class="card-number">13</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 14"><span class="card-number">14</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 15"><span class="card-number">15</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 16"><span class="card-number">16</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 17"><span class="card-number">17</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 18"><span class="card-number">18</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 19"><span class="card-number">19</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 20"><span class="card-number">20</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 21"><span class="card-number">21</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 22"><span class="card-number">22</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 23"><span class="card-number">23</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 24"><span class="card-number">24</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 25"><span class="card-number">25</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 26"><span class="card-number">26</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 27"><span class="card-number">27</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 28"><span class="card-number">28</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 29"><span class="card-number">29</span></div>
+						<div class="carousel-card-item"><img src="/assets/svg/carosello.svg" alt="Video 30"><span class="card-number">30</span></div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Glare effect overlay -->
+			<div class="card-glare"></div>
+		</div>
+	</div>
+
+	<div class="column-right">
+		<p class="description-text" id="card-description">
+			Quasi tre volte l'intera popolazione mondiale. Un flusso ininterrotto di sguardi incollati ai video di queste Olimpiadi Invernali.
+		</p>
+	</div>
+</div>
+
+<!-- Scroll indicator (non-clickable down arrow + scroll text) -->
+<div class="scroll-indicator" id="scroll-indicator">
+	<span class="scroll-text">scroll</span>
+	<svg class="scroll-arrow" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+		<path d="M12 6v12M12 18l-5-5M12 18l5-5" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+	</svg>
+</div>
+
+<!-- Decorative Line 1 (prima_linea.svg shifted to X=0 and reversed) -->
+<svg id="prima-linea" class="decor-line" viewBox="0 0 620 225" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<path d="M0 19.3828C0 19.3828 115.943 118.632 202.5 111.383C271.783 105.58 290.633 23.6943 360 28.3828C452.445 34.6312 521.5 141.883 606.5 203.883" stroke="#533EDC" stroke-width="51"/>
+</svg>
+
+<!-- Layout Inspector Panel (Dev Helper) -->
+<div id="layout-inspector" class="layout-inspector minimized">
+	<div class="inspector-header">
+		<h4>Layout Inspector 🛠️</h4>
+		<button id="inspector-toggle-min" title="Minimizza/Espandi" class="btn-icon">＋</button>
+	</div>
+	<div class="inspector-body">
+		<div class="inspector-field">
+			<label for="inspector-select-target">Elemento Target:</label>
+			<select id="inspector-select-target">
+				<option value="#prima-linea">#prima-linea (Linea Viola)</option>
+				<option value=".morph-card">.morph-card (Card Morfosa)</option>
+				<option value=".column-left">.column-left (Titolo Left)</option>
+				<option value=".column-right">.column-right (Descrizione Right)</option>
+				<option value=".line-blue-slide">.line-blue-slide (Slide 1: Linea Blu)</option>
+				<option value=".card-shadow-blue">.card-shadow-blue (Slide 1: Ombra Rossa)</option>
+				<option value=".card-front-blue">.card-front-blue (Slide 1: Card Blu)</option>
+				<option value="#text-blue-slide">#text-blue-slide (Slide 1: Testo Blu)</option>
+				<option value=".line-red-slide">.line-red-slide (Slide 2: Linea Rossa)</option>
+				<option value=".card-shadow-red">.card-shadow-red (Slide 2: Ombra Gialla)</option>
+				<option value=".card-front-red">.card-front-red (Slide 2: Card Rossa)</option>
+				<option value="#text-red-slide">#text-red-slide (Slide 2: Testo Rosso)</option>
+				<option value="custom">-- Altro (Scrivi selettore CSS) --</option>
+			</select>
+		</div>
+		
+		<div id="inspector-custom-target-container" class="inspector-field hidden">
+			<label for="inspector-custom-target">Selettore Personalizzato:</label>
+			<input type="text" id="inspector-custom-target" placeholder="es. .section-title" />
+		</div>
+
+		<div class="inspector-field checkbox-field">
+			<input type="checkbox" id="inspector-force-visible" />
+			<label for="inspector-force-visible">Forza visibilità (Aggiunge classe .active)</label>
+		</div>
+
+		<div class="inspector-divider">Posizione & Dimensione</div>
+
+		<div class="inspector-field">
+			<div class="field-header">
+				<label for="inspector-slider-left">Left (Posizione X):</label>
+				<span id="val-left">0px</span>
+			</div>
+			<input type="range" id="inspector-slider-left" min="-200" max="1500" value="0" />
+		</div>
+
+		<div class="inspector-field">
+			<div class="field-header">
+				<label for="inspector-slider-bottom">Bottom (Posizione Y):</label>
+				<span id="val-bottom">0px</span>
+			</div>
+			<input type="range" id="inspector-slider-bottom" min="-200" max="1000" value="0" />
+		</div>
+
+		<div class="inspector-field">
+			<div class="field-header">
+				<label for="inspector-slider-width">Width (Larghezza):</label>
+				<span id="val-width">25vw</span>
+			</div>
+			<input type="range" id="inspector-slider-width" min="20" max="800" value="300" />
+		</div>
+
+		<div class="inspector-field">
+			<div class="field-header">
+				<label for="inspector-slider-opacity">Opacity (Opacità):</label>
+				<span id="val-opacity">1.0</span>
+			</div>
+			<input type="range" id="inspector-slider-opacity" min="0" max="100" value="100" />
+		</div>
+
+		<div class="inspector-divider">Codice CSS</div>
+		<textarea id="inspector-css-output" readonly></textarea>
+		<button id="inspector-btn-copy" class="btn-copy">Copia Regola CSS</button>
+		<p id="inspector-copy-status" class="copy-status"></p>
+		
+		<p class="drag-hint">💡 Clicca e trascina direttamente l'elemento sullo schermo per muoverlo!</p>
+	</div>
+</div>
+
+<!-- Sezione Testuale Bianca Sottostante (Step 5) -->
+<div class="scrollable-content-section" id="scrollable-content-section">
+	<div class="content-wrapper">
+		
+		<!-- Slide 1: Blue -->
+		<div class="video-slide slide-blue">
+			<img class="slide-wavy-line line-blue-slide" src="/assets/svg/seconda_linea.svg" alt="" />
+			
+			<div class="slide-content-left">
+				<div class="video-card-wrapper">
+					<img class="card-shadow-blue" src="/assets/svg_video/1_ombra.svg" alt="" />
+					<img class="card-front-blue" src="/assets/svg_video/1_sopra.svg" alt="Video Olimpico" />
+				</div>
+			</div>
+			
+			<div class="slide-content-right">
+				<div class="slide-text-container" id="text-blue-slide">
+					<p class="slide-subtitle">
+						<span class="highlight-blue">Un'Olimpiade iper-condivisa,</span> in cui il racconto social si è rivelato estremamente
+					</p>
+					<h2 class="slide-title blue-text">
+						DECENTRALIZZATO<br>DALLO SPORT
+					</h2>
+				</div>
+			</div>
+		</div>
+
+		<!-- Slide 2: Red -->
+		<div class="video-slide slide-red">
+			<img class="slide-wavy-line line-red-slide" src="/assets/svg/quarta_linea.svg" alt="" />
+			
+			<div class="slide-content-left">
+				<div class="slide-text-container" id="text-red-slide">
+					<p class="slide-subtitle">
+						<span class="highlight-red">Persino chi non segue</span> queste discipline si è sentito chiamato in causa a
+					</p>
+					<h2 class="slide-title red-text">
+						RECENSIRE<br>QUESTO EVENTO
+					</h2>
+				</div>
+			</div>
+			
+			<div class="slide-content-right">
+				<div class="video-card-wrapper">
+					<img class="card-shadow-red" src="/assets/svg_video/2_ombra.svg" alt="" />
+					<img class="card-front-red" src="/assets/svg_video/2_sopra.svg" alt="Video Recensione" />
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
