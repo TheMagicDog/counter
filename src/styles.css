@@ -1,5 +1,168 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Big+Shoulders+Display:wght@900&family=Outfit:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap');
 
+/* ========================================
+   FIGMA DESIGN SYSTEM VARIABLES
+   ======================================== */
+
+:root {
+  /* ==================== COLORI NEUTRALI ==================== */
+  --neutral-50: #f3f3f3;
+  --neutral-100: #cfcfcf;
+  --neutral-200: #a8a8a8;
+  --neutral-300: #868686;
+  --neutral-400: #686868;
+  --neutral-500: #4e4e4e;
+  --neutral-600: #395959;
+  --neutral-700: #282828;
+  --neutral-800: #1d1d1d;
+  --neutral-900: #151515;
+
+  /* ==================== COLORI BRAND: SPORT INSOLITI ==================== */
+  --brand-sport-insoliti-100: #c9cffc;
+  --brand-sport-insoliti-200: #a8b0f9;
+  --brand-sport-insoliti-300: #8687f3;
+  --brand-sport-insoliti-400: #7069ec;
+  --brand-sport-insoliti-500: #533ddc;
+  --brand-sport-insoliti-600: #523dc5;
+  --brand-sport-insoliti-700: #433e9e;
+  --brand-sport-insoliti-800: #3a3e7e;
+  --brand-sport-insoliti-900: #232e48;
+
+  /* ==================== COLORI BRAND: VIP INASPETTATI ==================== */
+  --brand-vip-100: #fdeafd;
+  --brand-vip-200: #fbd4f8;
+  --brand-vip-300: #f5b2ef;
+  --brand-vip-400: #ee84e3;
+  --brand-vip-500: #dc3dcc;
+  --brand-vip-600: #c435b3;
+  --brand-vip-700: #a23e91;
+  --brand-vip-800: #862375;
+  --brand-vip-900: #6d2260;
+
+  /* ==================== COLORI BRAND: VILLAGGIO ==================== */
+  --brand-villaggio-100: #FDCBCC;
+  --brand-villaggio-200: #FAA7A9;
+  --brand-villaggio-300: #f61675;
+  --brand-villaggio-400: #ec4848;
+  --brand-villaggio-500: #dc3e41;
+  --brand-villaggio-600: #b61e22;
+  --brand-villaggio-700: #961e20;
+  --brand-villaggio-800: #7d1f21;
+  --brand-villaggio-900: #440b0c;
+
+  /* ==================== COLORI BRAND: CIBO ==================== */
+  --brand-cibo-100: #fce9ee;
+  --brand-cibo-200: #f7e7cf;
+  --brand-cibo-300: #eccf9a;
+  --brand-cibo-400: #e3b166;
+  --brand-cibo-500: #dc963e;
+  --brand-cibo-600: #d3792c;
+  --brand-cibo-700: #bb5b24;
+  --brand-cibo-800: #9c4120;
+  --brand-cibo-900: #7f3420;
+
+  /* ==================== UNITÀ / SPACING ==================== */
+  --unit-0: 0;
+  --unit-4: 4px;
+  --unit-8: 8px;
+  --unit-12: 12px;
+  --unit-16: 16px;
+  --unit-24: 24px;
+  --unit-32: 32px;
+  --unit-40: 40px;
+  --unit-48: 48px;
+  --unit-51: 51px;
+  --unit-56: 56px;
+  --unit-64: 64px;
+  --unit-80: 80px;
+  --unit-160: 160px;
+  --unit-1000: 1000px;
+
+  /* ==================== TOKEN COLORI ==================== */
+  /* Sfondo */
+  --color-bg-primary: var(--neutral-900);
+  --color-bg-secondary: var(--neutral-800);
+  --color-bg-sport: var(--brand-sport-insoliti-500);
+
+  /* Testo */
+  --color-text-primary: var(--neutral-100);
+  --color-text-secondary: var(--neutral-300);
+
+  /* Link */
+  --color-link-normal: #ffffff;
+  --color-link-hover: #ffffff;
+
+  /* Filtri */
+  --color-filter-bg-selected: var(--brand-sport-insoliti-500);
+  --color-filter-bg-hover: var(--brand-sport-insoliti-100);
+  --color-filter-text-base: var(--neutral-900);
+  --color-filter-text-selected: var(--neutral-900);
+
+  /* ==================== RAGGIO / BORDER RADIUS ==================== */
+  --radius-none: 0;
+  --radius-xs: 2px;
+  --radius-s: 4px;
+  --radius-m: 8px;
+  --radius-l: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* ==================== SPACING ==================== */
+  --spacing-0: 0;
+  --spacing-1: 2px;
+  --spacing-2: 4px;
+  --spacing-3: 8px;
+  --spacing-4: 8px;
+  --spacing-5: 12px;
+  --spacing-6: 16px;
+  --spacing-7: 16px;
+  --spacing-8: 24px;
+  --spacing-9: 32px;
+  --spacing-10: 48px;
+  --spacing-11: 64px;
+
+  /* ==================== FONT ==================== */
+  --font-family: "dharma-gothic-e", sans-serif;
+  --font-family-text: "gelica", sans-serif;
+
+  /* ==================== LINEA ==================== */
+  --line-thickness: 51px;
+}
+
+/* ==================== UTILITY ALIASES ==================== */
+/* Questi alias rendono le variabili più facili da usare */
+
+/* Colori di base */
+:root {
+  --color-primary: var(--brand-sport-insoliti-500);
+  --color-secondary: var(--brand-vip-500);
+  --color-accent: var(--brand-cibo-500);
+  --color-success: var(--brand-villaggio-500);
+
+  /* Sfondo */
+  --bg-primary: var(--color-bg-primary);
+  --bg-secondary: var(--color-bg-secondary);
+
+  /* Testo */
+  --text-primary: var(--color-text-primary);
+  --text-secondary: var(--color-text-secondary);
+
+  /* Spacing comuni */
+  --spacing-xs: var(--unit-4);
+  --spacing-sm: var(--unit-8);
+  --spacing-md: var(--unit-16);
+  --spacing-lg: var(--unit-24);
+  --spacing-xl: var(--unit-32);
+  --spacing-2xl: var(--unit-48);
+
+  /* Border radius comuni */
+  --radius-sm: var(--radius-s);
+  --radius-md: var(--radius-m);
+  --radius-lg: var(--radius-l);
+  --radius-circle: var(--radius-full);
+}
+
+
 /* 
   If you have the official Dharma Gothic font files, you can place them in a folder 
   and uncomment this @font-face block to load it directly:
@@ -44,9 +207,9 @@ html {
 
 /* Scroll height to link the counter value directly to scroll */
 body {
-  min-height: 2350vh;
+  min-height: 2305vh;
   position: relative;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-family-text), sans-serif;
   overflow-x: hidden;
   overscroll-behavior: none; /* Disable elastic scroll bounce on body */
 }
@@ -105,7 +268,7 @@ body {
 }
 
 #counter-display-back {
-  color: #F5B2EF; /* Light pink/magenta text color */
+  color: var(--brand-vip-300); /* Light pink/magenta text color */
   transform: translate3d(-50%, -50%, -1px); /* Placed under SVG (Z=0) so the card covers it when solid */
 }
 
@@ -120,7 +283,7 @@ body {
 
 /* The original big rolling counter elements inside the layers */
 .counter-display {
-  font-family: 'Dharma Gothic C ExBold', 'Dharma Gothic C', 'Dharma Gothic E ExBold', 'Dharma Gothic E', 'Dharma Gothic', 'Bebas Neue', 'Big Shoulders Display', sans-serif;
+  font-family: var(--font-family), sans-serif;
   font-weight: 900;
   text-transform: uppercase;
   font-size: 19vw; 
@@ -200,12 +363,12 @@ body {
 }
 
 .section-title {
-  font-family: 'Dharma Gothic C ExBold', 'Dharma Gothic C', 'Dharma Gothic E ExBold', 'Dharma Gothic E', 'Dharma Gothic', 'Bebas Neue', 'Big Shoulders Display', sans-serif;
+  font-family: var(--font-family), sans-serif;
   font-weight: 900;
-  font-size: 4.8vw;
+  font-size: clamp(2.5rem, 4.8vw, 6.5rem);
   letter-spacing: 0.02em;
   line-height: 0.85;
-  color: #1a1a1a;
+  color: var(--neutral-900);
   text-transform: uppercase;
   text-align: left;
   margin: 0;
@@ -215,11 +378,11 @@ body {
 }
 
 .description-text {
-  font-family: 'Rockwell', 'Rockwell Nova', 'Courier New', serif;
+  font-family: var(--font-family-text), sans-serif;
   font-weight: 400;
-  font-size: 1.1vw;
-  line-height: 1.5;
-  color: #2b2b2b;
+  font-size: clamp(1.1rem, 1.3vw, 1.625rem);
+  line-height: 1.4;
+  color: var(--neutral-700);
   margin: 0;
   /* Transition handled frame-by-frame by JS LERP for maximum smoothness */
   will-change: opacity, transform;
@@ -323,9 +486,9 @@ body {
 }
 
 .number-digits {
-  font-family: 'Dharma Gothic C ExBold', 'Dharma Gothic C', 'Dharma Gothic E ExBold', 'Dharma Gothic E', 'Dharma Gothic', 'Bebas Neue', sans-serif;
+  font-family: var(--font-family), sans-serif;
   font-weight: 900;
-  font-size: 12.5vw; /* Extremely large and impactive */
+  font-size: clamp(5rem, 12.5vw, 14rem); /* Extremely large and impactive */
   line-height: 0.8;
   color: #ffffff;
   text-transform: uppercase;
@@ -334,9 +497,9 @@ body {
 }
 
 .number-suffix {
-  font-family: 'Dharma Gothic C ExBold', 'Dharma Gothic C', 'Dharma Gothic E ExBold', 'Dharma Gothic E', 'Dharma Gothic', 'Bebas Neue', sans-serif;
+  font-family: var(--font-family), sans-serif;
   font-weight: 900;
-  font-size: 2.8vw; /* Proportional to digits */
+  font-size: clamp(1.2rem, 2.8vw, 3rem); /* Proportional to digits */
   line-height: 0.8;
   color: #ffffff;
   text-transform: uppercase;
@@ -499,13 +662,13 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  color: #1a1a1a;
+  color: var(--neutral-900);
   will-change: opacity, transform;
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 .scroll-text {
-  font-family: 'Rockwell', 'Rockwell Nova', 'Courier New', serif;
+  font-family: var(--font-family-text), sans-serif;
   font-weight: bold;
   font-variant: small-caps;
   font-size: 14px;
@@ -557,7 +720,7 @@ body {
 }
 
 .final-title {
-  font-family: 'Dharma Gothic C ExBold', 'Dharma Gothic C', 'Dharma Gothic E ExBold', 'Dharma Gothic E', 'Dharma Gothic', 'Bebas Neue', 'Big Shoulders Display', sans-serif;
+  font-family: var(--font-family), sans-serif;
   font-weight: 900;
   font-size: 12vw;
   line-height: 0.85;
@@ -753,7 +916,7 @@ body {
   background: rgba(83, 62, 220, 0.9); /* Brand violet with opacity */
   border: 1.5px solid rgba(255, 255, 255, 0.6);
   color: #ffffff;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-family-text), sans-serif;
   font-weight: 900;
   font-size: 1.1rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
@@ -868,7 +1031,7 @@ body {
   display: flex;
   flex-direction: column;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  color: #1a1a1a;
+  color: var(--neutral-900);
   overflow: hidden;
   transition: max-height 0.3s ease, width 0.3s ease, background 0.3s ease;
 }
@@ -894,13 +1057,13 @@ body {
   font-size: 14px;
   margin: 0;
   font-weight: 700;
-  color: #533edc;
+  color: var(--brand-sport-insoliti-500);
 }
 
 .btn-icon {
   background: none;
   border: none;
-  color: #533edc;
+  color: var(--brand-sport-insoliti-500);
   font-size: 16px;
   font-weight: 900;
   cursor: pointer;
@@ -1018,7 +1181,7 @@ body {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: #533edc;
+  background: var(--brand-sport-insoliti-500);
   cursor: pointer;
   border: 2px solid #fff;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
@@ -1038,7 +1201,7 @@ body {
 }
 
 .btn-copy {
-  background: #533edc;
+  background: var(--brand-sport-insoliti-500);
   color: #fff;
   border: none;
   padding: 8px;
@@ -1083,51 +1246,238 @@ body {
 /* Sezione Testuale Bianca Sottostante (Step 5) */
 .scrollable-content-section {
   position: absolute;
-  top: 2183vh; /* Inizia esattamente al termine della presentazione fissa */
+  top: 2138vh; /* Inizia esattamente al termine della presentazione fissa */
   width: 100vw;
   min-height: 150vh;
   background-color: #ffffff;
-  color: #1a1a1a;
+  color: var(--neutral-900);
   padding: 15vh 10vw;
   box-sizing: border-box;
   z-index: 2000; /* Sopra tutti i layer fissi */
 }
 
 .scrollable-content-section .content-wrapper {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-family-text), sans-serif;
+  overflow: visible;
 }
 
-.scrollable-content-section h2 {
-  font-size: 3.5vw;
+.video-slide {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 90vh;
+  position: relative;
+  padding: 8vh 0;
+  gap: 6vw;
+  overflow: visible;
+}
+
+/* Slide Blue: Card on the left, Text on the right */
+.slide-blue {
+  flex-direction: row;
+}
+
+/* Slide Red: Text on the left, Card on the right */
+.slide-red {
+  flex-direction: row;
+}
+
+.slide-content-left, .slide-content-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+}
+
+/* Card container */
+.video-card-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 440px; /* Elegant size */
+  margin: 0 auto;
+}
+
+/* Shadow and front card alignment */
+.card-shadow-blue {
+  position: absolute;
+  left: -142px;
+  bottom: 99px;
+  top: auto;
+  width: 528px;
+  height: auto;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 1.00;
+}
+
+.card-front-blue {
+  position: relative;
+  left: -81px;
+  bottom: 95px;
+  top: auto;
+  width: 440px;
+  height: auto;
+  z-index: 2;
+  border-radius: 24px;
+  filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.08));
+  opacity: 1.00;
+}
+
+.card-shadow-red {
+  position: absolute;
+  left: 132px;
+  bottom: 209px;
+  top: auto;
+  width: 528px;
+  height: auto;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 1.00;
+}
+
+.card-front-red {
+  position: relative;
+  left: 170px;
+  bottom: 222px;
+  top: auto;
+  width: 440px;
+  height: auto;
+  z-index: 2;
+  border-radius: 24px;
+  filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.08));
+  opacity: 1.00;
+}
+
+/* Text styles */
+.slide-text-container {
+  max-width: 550px;
+  position: relative; /* Consente lo spostamento tramite Layout Inspector */
+}
+
+.slide-blue .slide-text-container {
+  text-align: right;
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.slide-red .slide-text-container {
+  text-align: left;
+  margin-left: 0;
+  margin-right: auto;
+}
+
+#text-red-slide {
+  left: -38px;
+  bottom: 199px;
+  top: auto;
+  width: 541px;
+  opacity: 1.00;
+}
+
+.slide-subtitle {
+  font-family: var(--font-family-text), sans-serif;
+  font-size: clamp(1.1rem, 1.4vw, 1.625rem);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--neutral-700);
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
+.highlight-blue {
+  color: var(--brand-sport-insoliti-500);
+  font-weight: 800;
+}
+
+.highlight-red {
+  color: var(--brand-villaggio-500);
+  font-weight: 800;
+}
+
+.slide-title {
+  font-family: var(--font-family), sans-serif;
+  font-size: clamp(2.5rem, 4.6vw, 6.5rem);
   font-weight: 900;
-  margin-bottom: 2rem;
-  color: #533edc; /* Colore brand violet */
+  line-height: 0.95;
+  letter-spacing: -0.15vw;
   text-transform: uppercase;
-  font-family: 'Outfit', sans-serif;
-  letter-spacing: -0.05vw;
-  line-height: 1.1;
+  margin: 0;
 }
 
-.scrollable-content-section p {
-  font-size: 1.35rem;
-  line-height: 1.8;
-  margin-bottom: 2rem;
-  color: #2b2b2b;
-  font-family: 'Outfit', sans-serif;
+.blue-text {
+  color: var(--brand-sport-insoliti-500);
 }
 
+.red-text {
+  color: var(--brand-villaggio-500);
+}
+
+/* Decorative wavy lines inside the slides */
+.slide-wavy-line {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.85;
+}
+
+.line-blue-slide {
+  left: 723px;
+  bottom: 612px;
+  top: auto;
+  width: 700px;
+  max-width: 700px;
+  opacity: 0.85;
+}
+
+.line-red-slide {
+  left: -350px;
+  bottom: 235px;
+  top: auto;
+  width: 500px;
+  max-width: 500px;
+  opacity: 0.85;
+}
+
+/* Mobile responsive layout */
 @media (max-width: 900px) {
   .scrollable-content-section {
-    padding: 10vh 8vw;
+    padding: 8vh 6vw;
   }
-  .scrollable-content-section h2 {
-    font-size: 8vw;
+  .video-slide {
+    flex-direction: column !important;
+    gap: 4vh;
+    padding: 6vh 0;
+    min-height: auto;
   }
-  .scrollable-content-section p {
-    font-size: 1.1rem;
-    line-height: 1.6;
+  .slide-content-left, .slide-content-right {
+    width: 100%;
+  }
+  .video-card-wrapper {
+    max-width: 320px;
+  }
+  .slide-text-container {
+    text-align: center;
+    max-width: none;
+  }
+  .slide-subtitle {
+    font-size: 1.35rem;
+    margin-bottom: 1.2rem;
+  }
+  .slide-title {
+    font-size: 2.8rem;
+    letter-spacing: -0.05rem;
+  }
+  .line-blue-slide {
+    right: -10vw;
+    width: 70vw;
+  }
+  .line-red-slide {
+    left: -10vw;
+    width: 60vw;
   }
 }
 

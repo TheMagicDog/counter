@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Scroll Counter | 22MLD</title>
   <meta name="description" content="Contatore interattivo legato direttamente allo scroll, con design grafico split-color da 0 a 22 miliardi.">
+  <link rel="stylesheet" href="https://use.typekit.net/bcu2fox.css">
+  <link rel="stylesheet" href="https://use.typekit.net/aef5hmw.css">
+  <link rel="stylesheet" href="https://use.typekit.net/ccn4ahr.css">
+  <link rel="stylesheet" href="https://use.typekit.net/wxe2ryv.css">
   <link rel="stylesheet" href="/src/styles.css">
 </head>
 <body>
@@ -158,6 +162,14 @@
           <option value=".morph-card">.morph-card (Card Morfosa)</option>
           <option value=".column-left">.column-left (Titolo Left)</option>
           <option value=".column-right">.column-right (Descrizione Right)</option>
+          <option value=".line-blue-slide">.line-blue-slide (Slide 1: Linea Blu)</option>
+          <option value=".card-shadow-blue">.card-shadow-blue (Slide 1: Ombra Rossa)</option>
+          <option value=".card-front-blue">.card-front-blue (Slide 1: Card Blu)</option>
+          <option value="#text-blue-slide">#text-blue-slide (Slide 1: Testo Blu)</option>
+          <option value=".line-red-slide">.line-red-slide (Slide 2: Linea Rossa)</option>
+          <option value=".card-shadow-red">.card-shadow-red (Slide 2: Ombra Gialla)</option>
+          <option value=".card-front-red">.card-front-red (Slide 2: Card Rossa)</option>
+          <option value="#text-red-slide">#text-red-slide (Slide 2: Testo Rosso)</option>
           <option value="custom">-- Altro (Scrivi selettore CSS) --</option>
         </select>
       </div>
@@ -218,14 +230,53 @@
   <!-- Sezione Testuale Bianca Sottostante (Step 5) -->
   <div class="scrollable-content-section" id="scrollable-content-section">
     <div class="content-wrapper">
-      <h2>Un'esperienza olimpica senza precedenti</h2>
-      <p>
-        Le Olimpiadi Invernali di quest'anno hanno ridefinito il modo in cui il pubblico interagisce con lo sport. 
-        Attraverso brevi clip video, storie in tempo reale e una copertura digitale capillare, miliardi di persone hanno potuto vivere le emozioni delle gare come mai prima d'ora.
-      </p>
-      <p>
-        Questo contatore rappresenta solo la punta dell'iceberg di un ecosistema mediatico in costante evoluzione, dove ogni spettatore diventa parte attiva del racconto.
-      </p>
+      
+      <!-- Slide 1: Blue -->
+      <div class="video-slide slide-blue">
+        <img class="slide-wavy-line line-blue-slide" src="/src/assets/svg/seconda_linea.svg" alt="" />
+        
+        <div class="slide-content-left">
+          <div class="video-card-wrapper">
+            <img class="card-shadow-blue" src="/src/assets/svg_video/1_ombra.svg" alt="" />
+            <img class="card-front-blue" src="/src/assets/svg_video/1_sopra.svg" alt="Video Olimpico" />
+          </div>
+        </div>
+        
+        <div class="slide-content-right">
+          <div class="slide-text-container" id="text-blue-slide">
+            <p class="slide-subtitle">
+              <span class="highlight-blue">Un'Olimpiade iper-condivisa,</span> in cui il racconto social si è rivelato estremamente
+            </p>
+            <h2 class="slide-title blue-text">
+              DECENTRALIZZATO<br>DALLO SPORT
+            </h2>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2: Red -->
+      <div class="video-slide slide-red">
+        <img class="slide-wavy-line line-red-slide" src="/src/assets/svg/quarta_linea.svg" alt="" />
+        
+        <div class="slide-content-left">
+          <div class="slide-text-container" id="text-red-slide">
+            <p class="slide-subtitle">
+              <span class="highlight-red">Persino chi non segue</span> queste discipline si è sentito chiamato in causa a
+            </p>
+            <h2 class="slide-title red-text">
+              RECENSIRE<br>QUESTO EVENTO
+            </h2>
+          </div>
+        </div>
+        
+        <div class="slide-content-right">
+          <div class="video-card-wrapper">
+            <img class="card-shadow-red" src="/src/assets/svg_video/2_ombra.svg" alt="" />
+            <img class="card-front-red" src="/src/assets/svg_video/2_sopra.svg" alt="Video Recensione" />
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 

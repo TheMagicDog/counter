@@ -596,7 +596,7 @@ function init() {
       displayBack.style.fontSize = `${state.fontSize}vw`;
       
       if (state.progress < fillPhaseStart1) {
-        displayBack.style.color = '#F5B2EF';
+        displayBack.style.color = 'var(--brand-vip-300)';
       } else if (state.progress < suspensionEnd1) {
         const suspensionProgress = Math.min(Math.max((state.progress - fillPhaseStart1) / (suspensionEnd1 - fillPhaseStart1), 0), 1);
         const textR = lerp(245, 255, suspensionProgress);
@@ -1549,6 +1549,7 @@ function init() {
       let cssText = `${currentTargetSelector} {\n`;
       cssText += `  left: ${sliderLeft.value}px;\n`;
       cssText += `  bottom: ${sliderBottom.value}px;\n`;
+      cssText += `  top: auto;\n`;
       cssText += `  width: ${sliderWidth.value}px;\n`;
       cssText += `  opacity: ${opacityVal};\n`;
       cssText += `}`;
@@ -1562,6 +1563,7 @@ function init() {
 
       currentTarget.style.left = sliderLeft.value + 'px';
       currentTarget.style.bottom = sliderBottom.value + 'px';
+      currentTarget.style.top = 'auto';
       currentTarget.style.width = sliderWidth.value + 'px';
       
       const opacityVal = sliderOpacity.value / 100;
