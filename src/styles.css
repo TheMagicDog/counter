@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Big+Shoulders+Display:wght@900&family=Outfit:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap');
-
 /* ========================================
    FIGMA DESIGN SYSTEM VARIABLES
    ======================================== */
@@ -163,33 +161,7 @@
 }
 
 
-/* 
-  If you have the official Dharma Gothic font files, you can place them in a folder 
-  and uncomment this @font-face block to load it directly:
-  
-  @font-face {
-    font-family: 'Dharma Gothic';
-    src: url('DharmaGothic-Heavy.woff2') format('woff2'),
-         url('DharmaGothic-Heavy.woff') format('woff');
-    font-weight: 900;
-    font-style: normal;
-  }
-*/
 
-@font-face {
-  font-family: 'Dharma Gothic E ExBold';
-  src: local('Dharma Gothic C ExBold'),
-       local('Dharma Gothic C ExtraBold'),
-       local('DharmaGothicC-ExBold'),
-       local('DharmaGothicC-ExtraBold'),
-       local('Dharma Gothic C Heavy'),
-       local('Dharma Gothic E ExBold'), 
-       local('Dharma Gothic E ExtraBold'), 
-       local('DharmaGothicE-ExBold'), 
-       local('DharmaGothicE-ExtraBold'), 
-       local('Dharma Gothic E Heavy'),
-       local('Dharma Gothic Heavy');
-}
 
 * {
   box-sizing: border-box;
